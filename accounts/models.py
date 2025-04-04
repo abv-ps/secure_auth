@@ -11,6 +11,7 @@ class CustomUser(AbstractUser):
     def __str__(self) -> str:
         return self.username
 
+
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     bio = models.TextField(blank=True)

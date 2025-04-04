@@ -2,7 +2,6 @@ import logging
 from django.shortcuts import render
 from django.utils.deprecation import MiddlewareMixin
 
-
 logger = logging.getLogger(__name__)
 
 

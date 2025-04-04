@@ -8,6 +8,7 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ['bio', 'website']
 
+
 class RegisterForm(UserCreationForm):
     class Meta:
         model = CustomUser
@@ -18,6 +19,7 @@ class RegisterForm(UserCreationForm):
         if CustomUser.objects.filter(email=email).exists():
             raise forms.ValidationError("Email already exists")
         return email
+
 
 class LoginForm(AuthenticationForm):
     pass  # можна кастомізувати
