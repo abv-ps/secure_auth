@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <title>Вхід</title>
+    </head>
+<body>
+    <h2>Вхід</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% if form.errors %}
+            <div class="error">
+                <strong>Не вдалося увійти. Будь ласка, перевірте введені дані.</strong>
+                {{ form.non_field_errors }}
+                <ul>
+                    {% for field in form %}
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <li>{{ field.label }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <p><label for="{{ form.username.id_for_label }}">Ім'я користувача:</label>{{ form.username }}</p>
+        <p><label for="{{ form.password.id_for_label }}">Пароль:</label>{{ form.password }}</p>
+
+        <button type="submit">Увійти</button>
+    </form>
+    <a href="{% url 'register' %}">Не маєте облікового запису?</a>
+</body>
+</html>

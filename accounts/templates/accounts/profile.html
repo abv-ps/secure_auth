@@ -1,0 +1,24 @@
+<html lang="uk">
+<head>
+    <title>Профіль</title>
+    <meta http-equiv="X-Frame-Options" content="DENY">
+</head>
+<body>
+    <h1>Профіль користувача: {{ profile.user.username }}</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Зберегти зміни</button>
+    </form>
+
+    <h2>Ваша біографія:</h2>
+    <div>
+        {{ profile.bio }}
+    </div>
+
+    {% if profile.website %}
+        <p>Вебсайт: <a href="{{ profile.website }}">{{ profile.website }}</a></p>
+    {% endif %}
+</body>
+</html>

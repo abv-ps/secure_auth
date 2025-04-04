@@ -1,0 +1,4 @@
+<meta http-equiv="X-Frame-Options" content="DENY">
+<h2>Welcome, {{ request.user.username }}!</h2>
+<p>You are logged in.</p>
+<a href="{% url 'logout' %}">Logout</a>

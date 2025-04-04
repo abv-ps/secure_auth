@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <title>Реєстрація</title>
+    </head>
+<body>
+    <h2>Реєстрація</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% if form.errors %}
+            <div class="error">
+                <strong>Будь ласка, виправте наступні помилки:</strong>
+                <ul>
+                    {% for field in form %}
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <li>{{ field.label }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                    {{ form.non_field_errors }}
+                </ul>
+            </div>
+        {% endif %}
+
+        <p><label for="{{ form.username.id_for_label }}">Ім'я користувача:</label>{{ form.username }}</p>
+        <p><label for="{{ form.email.id_for_label }}">Електронна пошта:</label>{{ form.email }}</p>
+        <p><label for="{{ form.password.id_for_label }}">Пароль:</label>{{ form.password }}</p>
+        <p><label for="{{ form.password2.id_for_label }}">Підтвердження пароля:</label>{{ form.password2 }}</p>
+
+        <button type="submit">Зареєструватися</button>
+    </form>
+    <a href="{% url 'login' %}">Вже маєте обліковий запис?</a>
+</body>
+</html>
