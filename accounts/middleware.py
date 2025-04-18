@@ -11,10 +11,8 @@ class LogAccessMiddleware(MiddlewareMixin):
         user = request.user
         ip_address = self.get_client_ip(request)
 
-        # Список захищених префіксів URL (можете налаштувати)
         protected_prefixes = ['/profile/', '/dashboard/', '/admin/']
 
-        # Список "підозрілих" URL (можете налаштувати)
         suspicious_urls = ['/admin/', '/administrator/', '/wp-admin/', '.git']
 
         is_protected = any(path.startswith(prefix) for prefix in protected_prefixes)

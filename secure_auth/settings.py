@@ -9,22 +9,27 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv()
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^57zcshlk8bsr0@d-sgafk378+%li%0#ya*s+0atws&5#0oz#z'
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
+DEBUG = os.getenv("DJANGO_DEBUG", False) == "True"
+print(f"DEBUG: {DEBUG} {type(DEBUG)}")
 ALLOWED_HOSTS = []
+
+if DEBUG:
+    ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1']
 
 # Application definition
 
@@ -32,15 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    # 'django.contrib.sessions',
+    'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # 'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -50,6 +56,7 @@ MIDDLEWARE = [
     'accounts.middleware.CustomErrorMiddleware',
 ]
 
+SECURE_BROWSER_XSS_FILTER = True
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 X_FRAME_OPTIONS = "DENY"
@@ -66,7 +73,9 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_AGE = 1800
 
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
+if DEBUG:
+    SECURE_SSL_REDIRECT = False
 
 CSRF_COOKIE_HTTPONLY = True
 

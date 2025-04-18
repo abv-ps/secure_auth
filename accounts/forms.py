@@ -22,4 +22,4 @@ class RegisterForm(UserCreationForm):
 
 
 class LoginForm(AuthenticationForm):
-    pass  # можна кастомізувати
+    pass
